@@ -12,4 +12,7 @@ public class Calculator {
     static void subtract(int num) {
         val -= num;
     }
+static void multiply(int num) {
+        val = num*num;
+    }
 }
