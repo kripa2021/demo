@@ -1,5 +1,7 @@
 package com.example.di;
 
+import com.example.exception.InvalidEmployeeStateException;
+
 public class EmployeeIdManger {
 
     private IDGenerator idGenerator;
@@ -9,7 +11,10 @@ public class EmployeeIdManger {
     }
 
     public void addId(Employee employee) {
-      employee.setId(idGenerator.generate().toString());
+        if (null == employee) {
+            throw new InvalidEmployeeStateException("employee cannot be null");
+        }
+        employee.setId(idGenerator.generate().toString());
     }
 
 }
