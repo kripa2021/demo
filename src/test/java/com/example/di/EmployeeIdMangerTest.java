@@ -26,4 +26,10 @@ class EmployeeIdMangerTest {
         org.assertj.core.api.Assertions.assertThat(emp.getId())
             .isInstanceOf(String.class);
     }
+
+    @Test
+    void whenEmployeeIsNull_thenNPE(){
+        idMangerUnderTest.addId(null);
+
+    }
 }

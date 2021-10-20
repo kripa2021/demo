@@ -9,7 +9,8 @@ public class EmployeeIdManger {
     }
 
     public void addId(Employee employee) {
-      employee.setId(idGenerator.generate().toString());
+
+        employee.setId(idGenerator.generate().toString());
     }
 
 }
