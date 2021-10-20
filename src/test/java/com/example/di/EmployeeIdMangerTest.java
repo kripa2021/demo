@@ -1,5 +1,6 @@
 package com.example.di;
 
+import com.example.exception.InvalidEmployeeStateException;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +29,10 @@ class EmployeeIdMangerTest {
     }
 
     @Test
-    void whenEmployeeIsNull_thenNPE(){
-        idMangerUnderTest.addId(null);
-
+    void whenEmployeeIsNull_thenCustomException(){
+        org.assertj.core.api.Assertions.assertThatThrownBy(
+            () -> idMangerUnderTest.addId(null)
+        ).isInstanceOf(InvalidEmployeeStateException.class)
+        .hasMessage("employee cannot be null");
     }
 }
