@@ -1,14 +1,26 @@
 package com.example.di;
 
-import com.example.exception.InvalidEmployeeStateException;
-import java.util.regex.Pattern;
-import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.atMostOnce;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import com.example.exception.InvalidEmployeeStateException;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+//Mockito
+@ExtendWith(MockitoExtension.class)
 class EmployeeIdMangerTest {
 
-    private IDGenerator idGenerator = new UUIDGenerator();
+    @Mock
+    private IDGenerator idGeneratorMock;
 
-    private EmployeeIdManger idMangerUnderTest = new EmployeeIdManger(idGenerator);
+    @InjectMocks
+    private EmployeeIdManger idMangerUnderTest;
 
     @Test // GIVEN WHEN THEN - gherkin steps
     void whenIdManagerAddId_thenIdIsNotNull() {
@@ -34,5 +46,19 @@ class EmployeeIdMangerTest {
             () -> idMangerUnderTest.addId(null)
         ).isInstanceOf(InvalidEmployeeStateException.class)
         .hasMessage("employee cannot be null");
+    }
+
+    // stack - LIFO vs queue FIFO
+    @Test
+    void whenEmployeeIdIsSet_thenIdGeneratorIsCalled() {
+        String myTestId = "my random string id";
+        when(idGeneratorMock.generate()).thenReturn(myTestId);
+        Employee employee = new Employee();
+
+        idMangerUnderTest.addId(employee);
+
+        verify(idGeneratorMock, atMostOnce()).generate();
+        org.assertj.core.api.Assertions.assertThat(employee.getId())
+            .isEqualTo(myTestId);
     }
 }
