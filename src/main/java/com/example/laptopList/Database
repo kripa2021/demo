@@ -1,0 +1,22 @@
+CREATE TABLE Log (
+  id INTEGER IDENTITY PRIMARY KEY,
+  userName VARCHAR(30),
+  actionType VARCHAR(50),
+  dateTime Date,
+  data Varchar(500)
+);
+
+create table laptop(
+id integer,
+name varchar(50),
+brand varchar(50),
+price integer)
+
+CREATE TABLE myLog (
+  id INTEGER PRIMARY KEY,
+  userName VARCHAR(30),
+  actionType VARCHAR(50),
+  dateTime Date,
+  data Varchar(500)
+);
+
